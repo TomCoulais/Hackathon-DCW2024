@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hackaton | Accueil{% endblock %}
+
+{% block body %}
+    <section class="flex flex-col items-center justify-center h-full">
+            <a href="{{ path("app_clients") }}" class="flex items-center justify-center w-1/4 bg-amber-600 p-2 text-white rounded-lg">
+            <h2 class="text-xl font-semibold">Liste des clients</h2>
+        </a>
+        <a href="{{ path("app_factures") }}" class="flex items-center justify-center w-1/4 bg-amber-600 p-2 my-3 text-white rounded-lg">
+            <h2 class="text-xl font-semibold">Liste des factures</h2>
+        </a>
+    </section>
+{% endblock %}

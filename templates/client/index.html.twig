@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client index{% endblock %}
+
+{% block body %}
+    <section class="flex items-center justify-between mx-64 my-4">
+        <h1 class="">Liste des factures</h1>
+        <a href="{{ path('app_client_new') }}">Créer un client</a>
+    </section>
+    <section class="flex items-center justify-center">
+        <table class="min-w-full border-collapse">
+            <thead class="bg-sky-950 text-white">
+                <tr class="">
+                    <th class="border-sky-500">Id</th>
+                    <th class="border-slate-500">Name</th>
+                    <th class="border-slate-500">Email</th>
+                    <th class="border-slate-500">Entreprise</th>
+                    <th class="border-slate-500">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.entreprise }}</td>
+                    <td>
+                        <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
+                        <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
