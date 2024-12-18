@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+
+{% block body %}
+     <section class="flex items-center justify-between mx-64 my-4 text-white font-semibold">
+        <h1 class="text-3xl">Liste des factures</h1>
+        <a class="bg-amber-600 p-2 rounded-xl" href="{{ path('app_client_new') }}">Créer une facture</a>
+    </section>
+   <section class="flex items-center justify-center my-8 text-white">
+        <div class="overflow-x-auto w-full max-w-6xl bg-white rounded-lg shadow-lg">
+            <table class="min-w-full border-collapse ">
+                <thead class="bg-slate-500 text-white ">
+                    <tr>
+                        <th class="px-4 py-2 text-center     border-b border-gray-300">Numéro</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Client</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Email</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Date</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Statut</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Montant</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for facture in factures %}
+                    <tr class="hover:bg-gray-100 text-center">
+                        <td class="px-4 py-2 text-gray-700">{{ facture.numero }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client.client }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client.email }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ facture.dateEnvoie ? facture.dateEnvoie|date('Y-m-d H:i:s') : '' }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ facture.statut }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ facture.montant }}</td>
+                        <td class="px-4 py-2 text-center flex justify-center gap-4">
+                            <a href="{{ path('app_client_edit', {'id': facture.id}) }}" class=" font-semibold bg-yellow-500 p-2 rounded-lg hover:underline">Modifier</a>
+                            <form action="{{ path('app_client_delete', {'id': facture.id}) }}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="bg-red-800 p-2 rounded-lg hover:underline font-semibold">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="px-4 py-2 text-center text-gray-500">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
