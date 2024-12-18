@@ -25,7 +25,7 @@ class Client
     private string $entreprise;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Facture::class, cascade: ['persist', 'remove'])]
-    private Collection $factures;
+    private Collection $facture;
 
     public function __construct()
     {
@@ -70,8 +70,8 @@ class Client
         return $this;
     }
 
-    public function getFactures(): Collection
+    public function getFacture(): Collection
     {
-        return $this->factures;
+        return $this->facture;
     }
 }
