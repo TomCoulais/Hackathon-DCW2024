@@ -25,11 +25,11 @@
                 {% for client in clients %}
                     <tr class="hover:bg-gray-100 text-center">
                         <td class="px-4 py-2 text-gray-700">{{ client.id }}</td>
-                        <td class="px-4 py-2 text-gray-700">{{ client.name }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client   .name }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ client.email }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ client.entreprise }}</td>
-                        <td class="px-4 py-2 text-gray-700">{{ client.facture|length }}</td>
-                        {% for facture in client.facture %}
+                        <td class="px-4 py-2 text-gray-700">{{ client.factures | length }}</td>
+                        {% for facture in client.factures %}
                             <td class="px-4 py-2 text-gray-700">{{ client.totalMontant }}</td>
                         {% else %}
                             <td class="text-black">Aucune facture trouvée</td>
