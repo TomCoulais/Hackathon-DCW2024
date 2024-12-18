@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Facture{% endblock %}
+{% block title %}Hackathon|Modifier factures{% endblock %}
 
 {% block body %}
-    <h1>Edit Facture</h1>
+<div class="flex items-center justify-center min-h-screen ">
+    <div class="max-w-2xl w-full p-8 bg-sky-950 rounded-lg">
+        <div class="w-full text-left mb-6">
+            <a href="{{ path('app_factures') }}" class="inline-block font-semibold text-blue-400 hover:border-b hover:border-blue-400 flex items-center">
+               &larr; Retour à la liste des factures
+            </a>
+        </div>
+        <h1 class="text-3xl font-bold text-center text-white mb-8">Modification de la facture</h1>
 
-    {{ include('facture/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_facture_index') }}">back to list</a>
-
-    {{ include('facture/_delete_form.html.twig') }}
+        <div class="p-8 rounded-lg">
+            {{ include('facture/_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Client{% endblock %}
+{% block title %}Hackathon|Modifier client{% endblock %}
 
 {% block body %}
-    <h1>Edit Client</h1>
+<div class="flex items-center justify-center min-h-screen ">
+    <div class="max-w-2xl w-full p-8 bg-sky-950 rounded-lg">
+        <div class="w-full text-left mb-6">
+            <a href="{{ path('app_clients') }}" class="inline-block font-semibold text-blue-400 hover:border-b hover:border-blue-400 flex items-center">
+               &larr; Retour à la liste des clients
+            </a>
+        </div>
+        <h1 class="text-3xl font-bold text-center text-white mb-8">Modification du client {{ client.name }}</h1>
 
-    {{ include('client/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_client_index') }}">back to list</a>
-
-    {{ include('client/_delete_form.html.twig') }}
+        <div class=" p-8 rounded-lg">
+            {{ include('client/_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}

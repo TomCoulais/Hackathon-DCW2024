@@ -13,7 +13,7 @@ class FactureRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Factures::class);
+        parent::__construct($registry, Facture::class);
     }
 
     //    /**

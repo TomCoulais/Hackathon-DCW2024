@@ -11,7 +11,7 @@ class Facture
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $numero = null;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'factures')]
     #[ORM\JoinColumn(nullable: false)]
@@ -26,9 +26,9 @@ class Facture
     #[ORM\Column(type: 'integer')]
     private int $montant;
 
-    public function getNumero(): ?int
+    public function getId(): ?int
     {
-        return $this->numero;
+        return $this->id;
     }
 
     public function getClient(): Client

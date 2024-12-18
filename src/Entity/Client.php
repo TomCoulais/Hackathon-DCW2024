@@ -31,6 +31,11 @@ class Client
     {
         $this->factures = new ArrayCollection();
     }
+    public function __toString(): string
+    {
+        return $this->name; 
+    }
+
 
     public function getId(): ?int
     {

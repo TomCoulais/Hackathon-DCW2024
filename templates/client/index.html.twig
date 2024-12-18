@@ -1,41 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Client index{% endblock %}
+{% block title %}Hackaton | Liste Clients{% endblock %}
 
 {% block body %}
-    <section class="flex items-center justify-between mx-64 my-4">
-        <h1 class="">Liste des factures</h1>
-        <a href="{{ path('app_client_new') }}">Créer un client</a>
+    <a href="{{ path('app_main') }}" class="text-sky-700 hover:text-sky-400 font-semibold text-white flex items-center">
+        &larr; Retour
+    </a>
+
+    <section class="flex items-center justify-between mx-64 my-4 text-white font-semibold">
+        <h1 class="text-3xl">Liste des clients</h1>
+        <a class="bg-amber-600 p-2 rounded-xl" href="{{ path('app_client_new') }}">Créer un client</a>
     </section>
-    <section class="flex items-center justify-center">
-        <table class="min-w-full border-collapse">
-            <thead class="bg-sky-950 text-white">
-                <tr class="">
-                    <th class="border-sky-500">Id</th>
-                    <th class="border-slate-500">Name</th>
-                    <th class="border-slate-500">Email</th>
-                    <th class="border-slate-500">Entreprise</th>
-                    <th class="border-slate-500">actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for client in clients %}
-                <tr>
-                    <td>{{ client.id }}</td>
-                    <td>{{ client.name }}</td>
-                    <td>{{ client.email }}</td>
-                    <td>{{ client.entreprise }}</td>
-                    <td>
-                        <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
-                        <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+
+    <section class="flex items-center justify-center my-8">
+        <div class="w-full max-w-6xl px-4">
+            <form action="{{ path('app_clients') }}" method="get" class="relative flex items-center">
+                <span class="absolute left-4 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a7 7 0 107 7 7 7 0 00-7-7zM7 11l-4 4m4 0l4 4"></path>
+                    </svg>
+                </span>
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ search }}" 
+                    class="w-full pl-12 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                    placeholder="Rechercher par id, nom, ou email...">
+                <button type="submit" class="ml-4 bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                    Rechercher
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="flex items-center justify-center mt-4 text-white">
+        <div class="overflow-x-auto w-full max-w-6xl bg-white rounded-lg shadow-lg">
+            <table class="min-w-full border-collapse">
+                <thead class="bg-slate-500 text-white">
+                    <tr>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Id</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Nom</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Email</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Entreprise</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Factures</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Montant total</th>
+                        <th class="px-4 py-2 text-center border-b border-gray-300">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for client in clientsSearch %}
+                    <tr class="hover:bg-gray-100 text-center">
+                        <td class="px-4 py-2 text-gray-700">{{ client.id }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client.name }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client.email }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client.entreprise }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ client.factures | length }}</td>
+                        <td class="px-4 py-2 text-gray-700">
+                            {% if client.factures | length > 0 %}
+                                {{ client.totalMontant }}
+                            {% else %}
+                                Aucun montant trouvé
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2 text-center flex justify-center gap-4">
+                            <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="font-semibold bg-yellow-500 p-2 rounded-lg hover:underline">Modifier</a>
+                            <form action="{{ path('app_client_delete', {'id': client.id}) }}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="bg-red-800 p-2 rounded-lg hover:underline font-semibold">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="px-4 py-2 text-center text-gray-500">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
     </section>
 {% endblock %}
