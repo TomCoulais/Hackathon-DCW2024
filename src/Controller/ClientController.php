@@ -59,7 +59,7 @@ class ClientController extends AbstractController
     
     
 
-    #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
+    #[Route('/clients/new', name: 'app_client_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $client = new Client();
@@ -78,26 +78,9 @@ class ClientController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    #[Route('/edit/{id}', name: 'app_client_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Client $client, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(ClientEditType::class, $client);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            return $this->redirectToRoute('app_clients', [], Response::HTTP_SEE_OTHER);
-        }
-    
-        return $this->render('client/edit.html.twig', [
-            'client' => $client,
-            'form' => $form->createView(),
-        ]);
-    }
     
 
-    #[Route('/client/deleted/{id}', name: 'app_client_delete', methods: ['POST'])]
+    #[Route('/clients/deleted/{id}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client, EntityManagerInterface $em): Response
     {
         $em->remove($client);

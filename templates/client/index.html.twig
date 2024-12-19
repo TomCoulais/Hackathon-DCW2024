@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hackaton | Liste Clients{% endblock %}
+{% block title %}Hackaton | Clients{% endblock %}
 
 {% block body %}
     <a href="{{ path('app_main') }}" class="text-sky-700 hover:text-sky-400 font-semibold text-white flex items-center">
@@ -54,16 +54,18 @@
                         <td class="px-4 py-2 text-gray-700">{{ client.name }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ client.email }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ client.entreprise }}</td>
-                        <td class="px-4 py-2 text-gray-700">{{ client.factures | length }}</td>
+                        <td class="text-white">
+                            <p class="bg-amber-600 rounded-xl mx-12 p-1">{{ client.factures | length }}</p>
+                        </td>
+
                         <td class="px-4 py-2 text-gray-700">
                             {% if client.factures | length > 0 %}
-                                {{ client.totalMontant }}
+                                {{ client.totalMontant }}€
                             {% else %}
                                 Aucun montant trouvé
                             {% endif %}
                         </td>
                         <td class="px-4 py-2 text-center flex justify-center gap-4">
-                            <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="font-semibold bg-yellow-500 p-2 rounded-lg hover:underline">Modifier</a>
                             <form action="{{ path('app_client_delete', {'id': client.id}) }}" method="POST">
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <button type="submit" class="bg-red-800 p-2 rounded-lg hover:underline font-semibold">Supprimer</button>

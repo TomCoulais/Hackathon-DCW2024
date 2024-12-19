@@ -34,7 +34,7 @@ class FactureController extends AbstractController
     }
     
 
-    #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
+    #[Route('/factures/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $facture = new Facture();
@@ -54,7 +54,7 @@ class FactureController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'app_facture_edit', methods: ['GET', 'POST'])]
+    #[Route('/factures/edit/{id}', name: 'app_facture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facture $facture, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FactureEditType::class, $facture);

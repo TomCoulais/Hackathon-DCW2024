@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Factures{% endblock %}
+{% block title %}Hackathon | Factures{% endblock %}
 
 {% block body %}
     <a href="{{ path('app_main') }}" class="text-sky-700 hover:text-sky-400 font-semibold text-white flex items-center">
@@ -52,7 +52,15 @@
                         <td class="px-4 py-2 text-gray-700">{{ facture.id }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ facture.client.name }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ facture.dateEnvoie ? facture.dateEnvoie|date('Y-m-d H:i:s') : '' }}</td>
-                        <td class="px-4 py-2 text-gray-700">{{ facture.statut }}</td>
+                        {% if facture.statut == "Terminé" %}
+                            <td>
+                            <p class="bg-green-600 text-white font-semibold p-2 rounded-xl">{{ facture.statut }}</p>
+                            </td>
+                        {% else %}
+                            <td>
+                            <p class="bg-orange-600 text-white font-semibold p-2 rounded-xl">{{ facture.statut }}</p>
+                            </td>
+                        {% endif %}
                         <td class="px-4 py-2 text-gray-700">{{ facture.montant }}</td>
                         <td class="px-4 py-2 text-center flex justify-center gap-4">
                             <a href="{{ path('app_facture_edit', {'id': facture.id}) }}" class="font-semibold bg-yellow-500 p-2 rounded-lg hover:underline">Modifier</a>
