@@ -6,6 +6,7 @@ use App\Entity\Facture;
 use App\Form\FactureAddType;
 use App\Form\FactureEditType;
 use App\Repository\FactureRepository;
+use App\Service\FactureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,26 +16,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class FactureController extends AbstractController
 {
     #[Route('/factures', name: 'app_factures', methods: ['GET'])]
-    public function index(Request $request, FactureRepository $factureRepository): Response
+    public function index(Request $request, FactureService $factureService): Response
     {
-        $search = $request->query->get('search', '');
-    
-        $facturesQueryBuilder = $factureRepository->createQueryBuilder('f')
-            ->leftJoin('f.client', 'c')
-            ->where('c.name LIKE :search')
-            ->orWhere('f.statut LIKE :search')
-            ->setParameter('search', '%' . $search . '%'); 
-    
-        $factures = $facturesQueryBuilder->getQuery()->getResult();
-    
+        $search = $request->query->get('search', ''); 
+        $page = max(1, $request->query->getInt('page', 1)); 
+        $limit = 10; 
+
+        $result = $factureService->getPaginatedFactures($search, $page, $limit);
+
         return $this->render('facture/index.html.twig', [
-            'factures' => $factures,
-            'search' => $search,
+            'factures' => $result['factures'], 
+            'search' => $search, 
+            'currentPage' => $page, 
+            'totalPages' => $result['totalPages'], 
         ]);
     }
     
 
-    #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
+    #[Route('/factures/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $facture = new Facture();
@@ -54,7 +53,7 @@ class FactureController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'app_facture_edit', methods: ['GET', 'POST'])]
+    #[Route('/factures/edit/{id}', name: 'app_facture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facture $facture, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FactureEditType::class, $facture);
