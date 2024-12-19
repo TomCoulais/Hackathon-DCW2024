@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,15 +41,20 @@ class FactureEditType extends AbstractType
                     'class' => 'text-white text-left font-semibold mb-2'
                 ]
             ])
-            ->add('statut', TextType::class, [
+            ->add('statut', ChoiceType::class, [
                 'label' => 'Statut',
+                'choices' => [
+                    'En cours' => 'En cours',
+                    'Terminer' => 'Terminé',
+                    'A déterminer' => 'A déterminer',  
+                ],
                 'attr' => [
                     'class' => 'mt-2 p-3 border border-gray-300 rounded-md w-full focus:ring-2 focus:ring-orange-500 placeholder:text-gray-500',
-                    'placeholder' => 'Entrez le statut de la facture'
                 ],
                 'label_attr' => [
                     'class' => 'text-white text-left font-semibold mb-2'
-                ]
+                ],
+                'placeholder' => 'Sélectionnez le statut',
             ])
             ->add('montant', NumberType::class, [
                 'label' => 'Montant',

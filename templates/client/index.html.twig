@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hackaton | Liste Clients{% endblock %}
+{% block title %}Hackaton | Clients{% endblock %}
 
 {% block body %}
     <a href="{{ path('app_main') }}" class="text-sky-700 hover:text-sky-400 font-semibold text-white flex items-center">
@@ -24,7 +24,7 @@
                     type="text" 
                     name="search" 
                     value="{{ search }}" 
-                    class="w-full pl-12 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                    class="w-full pl-12 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-ring-amber-600" 
                     placeholder="Rechercher par id, nom, ou email...">
                 <button type="submit" class="ml-4 bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition duration-200">
                     Rechercher
@@ -54,16 +54,18 @@
                         <td class="px-4 py-2 text-gray-700">{{ client.name }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ client.email }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ client.entreprise }}</td>
-                        <td class="px-4 py-2 text-gray-700">{{ client.factures | length }}</td>
+                        <td class="text-white">
+                            <p class="bg-amber-700 rounded-xl mx-12 p-1">{{ client.factures | length }}</p>
+                        </td>
+
                         <td class="px-4 py-2 text-gray-700">
                             {% if client.factures | length > 0 %}
-                                {{ client.totalMontant }}
+                                {{ client.totalMontant }}€
                             {% else %}
                                 Aucun montant trouvé
                             {% endif %}
                         </td>
                         <td class="px-4 py-2 text-center flex justify-center gap-4">
-                            <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="font-semibold bg-yellow-500 p-2 rounded-lg hover:underline">Modifier</a>
                             <form action="{{ path('app_client_delete', {'id': client.id}) }}" method="POST">
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <button type="submit" class="bg-red-800 p-2 rounded-lg hover:underline font-semibold">Supprimer</button>
@@ -75,9 +77,43 @@
                         <td colspan="7" class="px-4 py-2 text-center text-gray-500">Aucun enregistrement trouvé</td>
                     </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
+    </section>
+
+    <section class="flex justify-center my-4">
+        <nav>
+            <ul class="inline-flex space-x-2">
+                {% if currentPage > 1 %}
+                    <li>
+                        <a 
+                            href="{{ path('app_clients', {'page': currentPage - 1, 'search': search}) }}" 
+                            class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-blue-500">
+                            &laquo; Précédent
+                        </a>
+                    </li>
+                {% endif %}
+                {% for i in 1..totalPages %}
+                    <li>
+                        <a 
+                            href="{{ path('app_clients', {'page': i, 'search': search}) }}" 
+                            class="px-4 py-2 rounded-lg 
+                                   {% if i == currentPage %}bg-blue-500 text-white{% else %}bg-gray-200{% endif %}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+                {% if currentPage < totalPages %}
+                    <li>
+                        <a 
+                            href="{{ path('app_clients', {'page': currentPage + 1, 'search': search}) }}" 
+                            class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-blue-500">
+                            Suivant &raquo;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     </section>
 {% endblock %}
