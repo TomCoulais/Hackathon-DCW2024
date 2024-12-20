@@ -65,7 +65,7 @@
                         <td class="px-4 py-2 text-center flex justify-center gap-4">
                             <a href="{{ path('app_facture_edit', {'id': facture.id}) }}" class="font-semibold bg-yellow-500 p-2 rounded-lg hover:underline">Modifier</a>
                             <form action="{{ path('app_facture_delete', {'id': facture.id}) }}" method="POST">
-                                <input type="hidden" name="_method" value="DELETE" />
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
                                 <button type="submit" class="bg-red-800 p-2 rounded-lg hover:underline font-semibold">Supprimer</button>
                             </form>
                         </td>
