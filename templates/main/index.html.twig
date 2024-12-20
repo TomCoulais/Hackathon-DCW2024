@@ -3,7 +3,9 @@
 {% block title %}Hackaton | Accueil{% endblock %}
 
 {% block body %}
-    <section class="flex flex-col items-center justify-center h-full">
+    <section class="flex flex-col items-center justify-center h-[80%]">
+        <img src="{{ asset('img/logo-digital-campus.svg') }}" class="w-48 h-20 filter invert brightness-100">
+        <h1 class="text-white font-bold text-4xl mb-6">Hackathon</h1>
             <a href="{{ path("app_clients") }}" class="flex items-center justify-center w-1/4 bg-amber-600 p-2 text-white rounded-lg">
             <h2 class="text-xl font-semibold">Liste des clients</h2>
         </a>
