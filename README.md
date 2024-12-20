@@ -27,7 +27,7 @@ Before you start, make sure your system meets the following requirements:
 ### **3. Configure environment variables:**
 - Duplicate the .env file and rename it to .env.local.
 - Update the values to match your setup (database, email, etc.):
-  ```php
+  ```.env
   DATABASE_URL="mysql://user:password@127.0.0.1:3306/database_name"
   ```
 ### **4. Create the database:**
