@@ -14,7 +14,7 @@ Before you start, make sure your system meets the following requirements:
 
 ## Installation
 
-### **1. **Clone the repository:**
+### **1. Clone the repository:**
 
    ```bash
    git clone https://github.com/TomCoulais/Hackathon-DCW2024.git
