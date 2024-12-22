@@ -18,7 +18,7 @@ Before you start, make sure your system meets the following requirements:
 
    ```bash
    git clone https://github.com/TomCoulais/Hackathon-DCW2024.git
-   cd project-name
+   cd Hackathon-DCW2024
    ```
 ### **2. Install PHP dependencies**:
   ```bash
@@ -26,7 +26,7 @@ Before you start, make sure your system meets the following requirements:
   ```
 ### **3. Configure environment variables:**
 - Duplicate the .env file and rename it to .env.local.
-- Update the values to match your setup (database, email, etc.):
+- Update the values to match your setup (database,user, etc.):
   ```.env
   DATABASE_URL="mysql://user:password@127.0.0.1:3306/database_name"
   ```
